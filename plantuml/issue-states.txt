@@ -1,0 +1,18 @@
+@startuml
+hide empty description
+state "Open" as O
+state "To Do" as T
+state "Doing" as D
+state "Closed" as C
+
+[*] -right-> O: open
+O   -right-> T: assign
+T   -down->  D: begin
+D   -left->  C: finish or \n abandon
+
+O   -down->  C: abandon
+T   -down->  C: abandon
+
+C   -up->    O: reopen
+C   --> [*]
+@enduml
