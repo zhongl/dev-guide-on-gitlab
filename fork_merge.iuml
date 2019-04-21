@@ -1,0 +1,55 @@
+title The Fork & Merge Development on Gitlab
+
+actor "TechLeader" as TL
+participant "A" as rg <<(G, #ADD1B2) Repo>>
+actor "Developer" as DEV
+participant "A's Mirror" as rp <<(P, #ADD1B2) Repo>>
+actor Pipeline as PL
+actor QAer as QA
+
+== Initialization ==
+create rg
+TL  ->     rg: new repo A \nunder a group namespace
+TL  ->     rg: setup minimal available baseline
+QA  ->     rg: ensure CICD was ready
+
+== Forking & Developing ==
+DEV ->     rg: fork repo A \nto private namespace
+activate   rg
+create     rp
+rg  -->    rp
+deactivate rg
+
+loop until done
+DEV ->     rp: develop on the issue
+end
+
+== Merge Request ==
+DEV ->     rg: request to merge
+activate   rg
+
+loop until success
+    PL  ->     rg: check 
+    alt check failure
+        DEV ->     rp: fix
+    end
+end
+
+loop until LGTM
+    TL  ->     rg: 6. review 
+    alt discussion
+        DEV ->     rp: resolve 
+    end
+end
+QA  ->     rg: merge 
+deactivate rg
+
+== Integration ==
+PL  ->     rg: 8. deploy & verify
+
+alt verify failure
+    QA  ->     rg: revert optional
+    QA  ->    DEV: shoot a bug issue
+else success
+    QA  ->     rg: tag a release candidate
+end
