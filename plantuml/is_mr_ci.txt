@@ -1,0 +1,8 @@
+@startuml
+object "Issue" as I
+object "Merge Request" as M
+object "Commit" as C
+
+I     *-right- "*" M
+M "1" *-right- "*" C
+@enduml
