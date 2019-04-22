@@ -144,7 +144,7 @@ Issue 被分为四种基本状态:
 5. **Developer** 视情况解决(**Resolve**)[^5], 直到 **TechLeader** 评论回复**LGTM**;
 6. 最终, 由 **QAer** 执行 **merge** 操作.
 
-> **LGTM** 是 **Look Good To Me** 缩写, 普遍被用于 [Github](https://github.com) 的开源协作项目中, 表示项目的维护者认同外部贡献者提交的 **Pull .Request** 
+> **LGTM** 是 **Look Good To Me** 缩写, 普遍被用于 [Github](https://github.com) 的开源协作项目中, 表示项目的维护者认同外部贡献者提交的 **Pull Request** .
 
 ### Integration
 
