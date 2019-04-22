@@ -1,0 +1,14 @@
+# A pre-defined pipline for maven lib project.
+
+check:
+  extends: .check
+  script:
+    - mvn test jacoco:report
+    # print coverage report for pipeline
+    - cat target/site/jacoco/index.html
+
+deploy:
+  extends: .merged
+  stage: deploy
+  script:
+    - mvn deploy
