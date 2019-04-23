@@ -11,6 +11,15 @@ stages:
   only:
     - merge_requests
 
+.coverage:      
+  stage: deploy
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 days
+  only:
+    - merge_requests
+
 .merged:
   only:
     variables:
