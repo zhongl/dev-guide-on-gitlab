@@ -84,7 +84,7 @@ Issue 被分为四种基本状态:
 - **Doing** - 开始实施的 Issue 必须指定明确的 **Due Date**, 这是**交付进度重要参考基准**;
 - **Closed** - Issue 实施完成后, 由负责人指派给发起人, 由发起人验证交付是否满足预期, 是则关闭, 反之继续转交给负责人修正. 其它都可能因为 **放弃** 而被关闭, 即便被关闭, 也可以在需要的时候被**重新开启**.
 
-![issue's  states](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/plantuml/issue_states.txt)
+![issue's  states](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/.plantuml/issue_states.txt)
 
 > **新增状态**
 > 
@@ -116,7 +116,7 @@ Issue 被分为四种基本状态:
 
 > 保证交付质量
 
-![fork and merge](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/plantuml/fork_merge.txt)
+![fork and merge](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/.plantuml/fork_merge.txt)
 
 > 上图语法参考 http://plantuml.com/zh/sequence-diagram .
 
@@ -154,7 +154,7 @@ Issue 被分为四种基本状态:
 
 ### Issue Vs Merge Request Vs Commit
 
-![is mr ci](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/plantuml/is_mr_ci.txt)
+![is mr ci](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/.plantuml/is_mr_ci.txt)
 - **代码**作为研发最主要的**交付物**, 每次 **Commit**, 都应关联到**唯一**一个 **Merge Request**, 以作为质量检查和评估的单元;
 - 每一个 **Merge Request**  都应关联到 **至少** 一个 **Issue**, 以确认某个交付期望被落实.
 
