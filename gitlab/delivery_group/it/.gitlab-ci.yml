@@ -1,0 +1,55 @@
+.env: &env_check
+  before_script:
+    - test -n "${USERNAME}" 
+    - test -n "${PASSWORD}" 
+    - test -n "${HOSTADDR}"
+
+image: 
+  name: docker/compose:1.24.0
+  entrypoint:
+    - /bin/sh
+    - -c
+
+check:  
+  stage: test
+  script: 
+    - docker-compose config
+  only:
+    - merge_requests
+    - branches
+
+deploy:
+  <<: *env_check
+  stage: deploy
+  script: 
+    - docker run --rm --entrypoint htpasswd registry:2 -Bbn ${USERNAME} ${PASSWORD} > htpasswd
+    - docker stack deploy -c docker-compose.yml ${CI_PROJECT_NAMESPACE}
+    - docker system prune -f --volumes
+  only:
+    refs:
+      - triggers
+  environment:
+    name: ${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}
+    url: http://${CI_PROJECT_NAMESPACE-gateway}.${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}
+    on_stop: recycle
+
+recycle:
+  stage: deploy
+  script: 
+   - docker stack rm ${CI_PROJECT_NAMESPACE}
+   - docker system prune -f --volumes
+  when: manual
+  environment:
+    name: ${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}
+    action: stop
+
+debug:
+  stage: test
+  script: 
+    - echo ${CMD}
+    - sh -c "${CMD}"
+  only:
+    refs:
+      - web
+    variables:
+      - $CMD
