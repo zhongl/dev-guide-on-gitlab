@@ -6,34 +6,7 @@
 - **dns** - 供自定义的域名解析服务;
 - **hub** - 供环境部署 Docker 镜像的私库.
 
-```plantuml
-
-actor Browser as B
-boundary ":80/tcp" as H
-boundary ":53/upd" as D
-
-cloud SWARM {
-    node dns
-
-    together {
-        node gateway
-        node hub
-        node "???" as N
-    }
-
-}
-
-B -right-> D: query: hub.d.it
-B --> H: http://hub.d.it
-dns -left- D
-dns -[hidden]-> gateway
-
-gateway -left- H
-gateway -right-> hub
-gateway -> N
-
-hub -[hidden]-> N
-```
+![it](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/gitlab/delivery_group/it/.plantuml/it.txt)
 
 ## 新增服务
 
