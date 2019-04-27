@@ -1,0 +1,75 @@
+version: '3.7'
+
+x-networks: &networks
+  networks:
+    - overlay
+
+services:
+
+  gateway: 
+    <<: *networks
+    image: traefik:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager      
+      labels:
+        traefik.port: 8080
+    command: 
+      - --api
+      - --docker
+      - --docker.watch
+      - --docker.network=${CI_PROJECT_NAMESPACE}_${CI_PROJECT_NAME}
+      - --docker.swarmmode
+      - --docker.domain=${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}
+      - --accesslog
+      - --traefiklog
+
+  dns:
+    <<: *networks
+    image: jpillora/dnsmasq:latest
+    ports:
+      - 53:53/udp
+    environment:
+      HTTP_USER: ${USERNAME}
+      HTTP_PASS: ${PASSWORD}
+    deploy:  
+      labels:
+        traefik.port: 8080 
+    command:
+      - --address
+      - /${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}/${HOSTADDR}
+
+  hub:
+    <<: *networks
+    image: registry:2
+    deploy:  
+      labels:
+        traefik.port: 5000 
+    configs:
+      - source: htpasswd
+        target: /auth/htpasswd
+      - source: config.yml
+        target: /etc/docker/registry/config.yml
+    volumes:
+      - registry_data:/var/lib/registry
+
+configs:
+  # https://blog.sunekeller.dk/2019/01/docker-stack-deploy-update-configs/
+  htpasswd:
+    name: htpasswd_${CI_JOB_ID}
+    file: ./htpasswd    
+  config.yml:
+    name: config.yml_${CI_JOB_ID}
+    file: ./registry/config.yml    
+  
+volumes:
+  registry_data:
+
+networks:
+  overlay:
+    name: ${CI_PROJECT_NAMESPACE}_${CI_PROJECT_NAME}
