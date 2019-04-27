@@ -5,9 +5,10 @@ Make a copy of this directory to your private Gitlab repository, eg: `https://yo
 ```yml
 inlcude:
   - project: 'ci/includes'
-    file: '/predef.yml'
+    file: '/maven/predef.yml'
   - project: 'ci/includes'
     file: '/maven/lib.yml'
+  # file: '/maven/docker.yml'  
 ```
 
 # Reference
