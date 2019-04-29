@@ -22,7 +22,7 @@ deploy:
   <<: *env_check
   stage: deploy
   script: 
-    - docker run --rm --entrypoint htpasswd registry:2 -Bbn ${USERNAME} ${PASSWORD} > htpasswd
+    - BASIC=$(docker run --rm --entrypoint htpasswd registry:2 -Bbn ${USERNAME} ${PASSWORD} | tee htpasswd)
     - docker stack deploy -c docker-compose.yml ${CI_PROJECT_NAMESPACE}
     - docker system prune -f --volumes
   only:

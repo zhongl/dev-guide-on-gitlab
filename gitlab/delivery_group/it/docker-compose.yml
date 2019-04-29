@@ -20,6 +20,8 @@ services:
       labels:
         traefik.port: 8080
     command: 
+      - --entrypoints=Name:http Address::80
+      - --entrypoints=Name:traefik Address::8080 Auth.Basic.Users:${BASIC}
       - --api
       - --docker
       - --docker.watch
