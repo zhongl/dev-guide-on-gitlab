@@ -23,6 +23,7 @@ test:
     - mvn test jacoco:report
     # print coverage report for pipeline
     - cat target/site/jacoco/index.html
+  coverage: '/Total.*?([0-9]{1,3})%/'    
   artifacts:
     when: on_success
     paths:
