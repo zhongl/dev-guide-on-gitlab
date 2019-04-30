@@ -16,7 +16,7 @@ check:
     - docker-compose config
   only:
     - merge_requests
-    - branches
+    - master
   except:
     variables:
       - $CMD
