@@ -17,17 +17,24 @@ check:
   only:
     - merge_requests
     - branches
+  except:
+    variables:
+      - $CMD
 
 deploy:
   <<: *env_check
   stage: deploy
   script: 
-    - BASIC=$(docker run --rm --entrypoint htpasswd registry:2 -Bbn ${USERNAME} ${PASSWORD} | tee htpasswd)
+    - export BASIC=$(docker run --rm --entrypoint htpasswd registry:2 -Bbn ${USERNAME} ${PASSWORD} | tee htpasswd)
     - docker stack deploy -c docker-compose.yml ${CI_PROJECT_NAMESPACE}
     - docker system prune -f --volumes
   only:
     refs:
       - triggers
+      - web
+  except:
+    variables:
+      - $CMD
   environment:
     name: ${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}
     url: http://${CI_PROJECT_NAMESPACE-gateway}.${CI_PROJECT_NAMESPACE}.${CI_PROJECT_NAME}
