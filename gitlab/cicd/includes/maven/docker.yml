@@ -24,8 +24,9 @@ deploy_it:
     - test -n "${IT_PROJECT_ID}"
   script:
     - >-
-      curl -X POST 
-           -F token=${TRIGGER_DEPLOY_TOKEN} 
-           -F ref=master 
-           ${CI_API_V4_URL}/projects/${IT_PROJECT_ID}/trigger/pipeline
+      curl 
+      -X POST 
+      -F token=${TRIGGER_DEPLOY_TOKEN} 
+      -F ref=master 
+      ${CI_API_V4_URL}/projects/${IT_PROJECT_ID}/trigger/pipeline
 
