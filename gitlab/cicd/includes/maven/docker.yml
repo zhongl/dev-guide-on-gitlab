@@ -1,7 +1,7 @@
 # A pre-defined pipline for maven project to build docker image and deploy.
 
 build_image:
-  extends: .merged
+  extends: .for_it
   stage: build
   before_script:
     - test -n "${HUB}"
@@ -12,20 +12,20 @@ build_image:
     - echo ${OPTS}
     - >- 
       mvn ${OPTS} 
-      -Ddockerfile.repository=${HUB}/snapshot/${CI_PROJECT_PATH} 
-      -Ddockerfile.tag=latest
-      package dockerfile:push 
+        -Ddockerfile.repository=${HUB}/snapshot/${CI_PROJECT_PATH} 
+        -Ddockerfile.tag=latest
+        package dockerfile:push 
 
 deploy_it:
-  extends: .merged
+  extends: .for_it
   stage: deploy
   before_script:
     - test -n "${TRIGGER_DEPLOY_TOKEN}"
     - test -n "${IT_PROJECT_ID}"
   script:
     - >-
-      curl -X POST \
-           -F token=${TRIGGER_DEPLOY_TOKEN} \
-           -F ref=master \
+      curl -X POST 
+           -F token=${TRIGGER_DEPLOY_TOKEN} 
+           -F ref=master 
            ${CI_API_V4_URL}/projects/${IT_PROJECT_ID}/trigger/pipeline
 
