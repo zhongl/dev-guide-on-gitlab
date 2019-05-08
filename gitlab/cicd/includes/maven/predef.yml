@@ -1,23 +1,17 @@
 # A set of pre-defined maven stages, job template.
 stages:
-  - build
   - check
+  - build
   - deploy
   - verify
 
-# Job template used in Merge Request
-.merge_request: 
-  only:
-    - merge_requests
 
-# Job template used after merged
-.merged:
+# Job only template for integration
+.for_it:
   only:
-    variables:
-      - $CI_COMMIT_DESCRIPTION =~ /See merge request/
+    - /^it\/.+/
 
 test:
-  extends: .merge_request
   stage: check
   script:
     - mvn test jacoco:report
@@ -33,7 +27,6 @@ test:
         - target/surefire-reports/TEST-*.xml
 
 pages:      
-  extends: .merge_request
   stage: deploy
   dependencies:
     - test

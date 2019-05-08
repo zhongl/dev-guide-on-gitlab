@@ -1,7 +1,7 @@
 # A pre-defined pipline for maven lib project.
 
 build_jar:
-  extends: .merged
+  extends: .for_it
   stage: deploy
   script:
     - mvn ${OPTS} package deploy

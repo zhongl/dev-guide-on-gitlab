@@ -1,7 +1,7 @@
 # A pre-defined pipline for maven project to build docker image and deploy.
 
 build_image:
-  extends: .merged
+  extends: .for_it
   stage: build
   before_script:
     - test -n "${HUB}"
@@ -17,7 +17,7 @@ build_image:
         package dockerfile:push 
 
 deploy_it:
-  extends: .merged
+  extends: .for_it
   stage: deploy
   before_script:
     - test -n "${TRIGGER_DEPLOY_TOKEN}"
