@@ -116,7 +116,7 @@ Issue 被分为四种基本状态:
 
 > 保证交付质量
 
-![fork and merge](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/.plantuml/fork_merge.txt)
+![fork and merge](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/9ddbad780c09b7a40df007ca76624185b8f8aac5/.plantuml/fork_merge.txt)
 
 > 上图语法参考 http://plantuml.com/zh/sequence-diagram .
 
@@ -165,6 +165,7 @@ Issue 被分为四种基本状态:
 
 - **master** - 主流版本的功能演进分支
 - **1.x** - 第一个正式交付版本的维护分支
+
 
 
 [^1]: https://docs.gitlab.com/ce/workflow/forking_workflow.html#project-forking-workflow
