@@ -37,16 +37,17 @@ loop until success
 end
 
 loop until LGTM
-    TL  ->     rg: 6. review 
+    TL  ->     rg:review 
     alt discussion
         DEV ->     rp: resolve 
     end
 end
-QA  ->     rg: merge 
+TL  ->     rg: merge 
 deactivate rg
 
 == Integration ==
-PL  ->     rg: 8. deploy & verify
+QA  ->     rg: new a tag
+PL  ->     rg: deploy & verify
 
 alt verify failure
     QA  ->     rg: revert optional

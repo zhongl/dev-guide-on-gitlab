@@ -140,17 +140,18 @@ Issue 被分为四种基本状态:
     1. 编译构建代码, 或静态走查代码; 
     2. 运行单元测试, 并获取测试覆盖.
 3. 一旦检查不通过, 则需要 **Developer** 进行修复, 直到检查通过;
-4. 检查通过后, **TechLeader** 进行审查代码变更, 提出改进商议(**Discussion**)[^4];
-5. **Developer** 视情况解决(**Resolve**)[^5], 直到 **TechLeader** 评论回复**LGTM**;
-6. 最终, 由 **QAer** 执行 **merge** 操作.
+4. 检查通过后, **TechLeader** 或其他 **Developer** 进行审查代码变更, 提出改进商议(**Discussion**)[^4];
+5. **Developer** 视情况解决(**Resolve**)[^5], 直到 **TechLeader** 或其他 **Developer** 评论回复**LGTM**;
+6. 最终, 由 **TechLeader** 执行 **merge** 操作.
 
 > **LGTM** 是 **Look Good To Me** 缩写, 普遍被用于 [Github](https://github.com) 的开源协作项目中, 表示项目的维护者认同外部贡献者提交的 **Pull Request** .
 
 ### Integration
 
-1. **Pipeline** 对合并后的代码进行 **deploy** 及 **verify** ;
-2. 一旦发现异常, **QAer** 可以**选择性 Revert**[^6],  并向 **Merge Request** 所属的 **Developer** 指派 **bug issue**, **Developer** 进行修复并发起一轮新的 **Merge Request**;
-3. 若一切如预期, **QAer** 可以选择对最新版本新建一个 **Tag**, 视为**Release Candidate**.
+1. **QAer** 创建一个新的 `tag`, 继而触发
+2. **Pipeline** 对合并后的代码进行 **deploy** 及 **verify** ;
+3. 一旦发现异常, **QAer** 可以**选择性 Revert**[^6],  并向 **Merge Request** 所属的 **Developer** 指派 **bug issue**, **Developer** 进行修复并发起一轮新的 **Merge Request**;
+4. 若一切如预期, **QAer** 可以选择对最新版本新建一个 **Tag**, 视为**Release Candidate**.
 
 ### Issue Vs Merge Request Vs Commit
 
@@ -160,14 +161,11 @@ Issue 被分为四种基本状态:
 
 ### Branches
 
-未交付到真正使用之前, 单分支(**master**)迭代演进, 是完全够用的. 在 **Merge Request** 中 `P:master -> G:master` 也是默认行为. 
-
-一旦交付真正使用, 并持续交付的情况下, 新老版本共存的现象就会出现. 此时, 可以同时维护多个 **Branches**, 比如:
+未交付到真正使用之前, 单分支(**master**)迭代演进, 是完全够用的. 一旦交付真正使用, 并持续交付的情况下, 新老版本共存的现象就会出现. 此时, 可以同时维护多个 **Branches**, 比如:
 
 - **master** - 主流版本的功能演进分支
 - **1.x** - 第一个正式交付版本的维护分支
 
-此时, **Merge Request** 的发起则需要有所区分, 若向 `G:1.x` 提交合并, 则来源也应该是 `P:1.x`.
 
 [^1]: https://docs.gitlab.com/ce/workflow/forking_workflow.html#project-forking-workflow
 [^2]: https://docs.gitlab.com/ce/user/project/merge_requests/
