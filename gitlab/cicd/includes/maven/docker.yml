@@ -12,9 +12,9 @@ build_image:
     - echo ${OPTS}
     - >- 
       mvn ${OPTS} 
-        -Ddockerfile.repository=${HUB}/snapshot/${CI_PROJECT_PATH} 
-        -Ddockerfile.tag=latest
-        package dockerfile:push 
+      -Ddockerfile.repository=${HUB}/snapshot/${CI_PROJECT_PATH} 
+      -Ddockerfile.tag=latest
+      package dockerfile:push 
 
 deploy_it:
   extends: .for_it

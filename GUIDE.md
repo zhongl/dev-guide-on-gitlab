@@ -110,7 +110,7 @@ Issue 被分为四种基本状态:
 
 - 每个 **Milestone** 的时间周期固定, 如**一周**;
 - 每个 **Issue** 的 **Due Date** 不要超过一个 **Milestone** 时间周期;
-    - 若超过, 则建议在**可用程度**上拆分为多个 Issue, 分派到多个 **Milestone** 中, 递进交付.
+- 若超过, 则建议在**可用程度**上拆分为多个 Issue, 分派到多个 **Milestone** 中, 递进交付.
 
 ## Fork & Merge Development Cycle
 
@@ -156,6 +156,7 @@ Issue 被分为四种基本状态:
 ### Issue Vs Merge Request Vs Commit
 
 ![is mr ci](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/.plantuml/is_mr_ci.txt)
+
 - **代码**作为研发最主要的**交付物**, 每次 **Commit**, 都应关联到**唯一**一个 **Merge Request**, 以作为质量检查和评估的单元;
 - 每一个 **Merge Request**  都应关联到 **至少** 一个 **Issue**, 以确认某个交付期望被落实.
 
