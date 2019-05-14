@@ -5,31 +5,45 @@ stages:
   - deploy
   - verify
 
-
 # Job only template for integration
 .for_it:
   only:
     - /^it\/.+/
 
-test:
+.report:
   stage: check
-  script:
-    - mvn test jacoco:report
+  after_script: 
     # print coverage report for pipeline
     - cat target/site/jacoco/index.html
   coverage: '/Total.*?([0-9]{1,3})%/'    
   artifacts:
-    when: on_success
     paths:
       - target/site/jacoco/
+    when: on_success
     reports:
-      junit:
-        - target/surefire-reports/TEST-*.xml
+      junit: 'target/surefire-reports/TEST-*.xml'
+
+singleton_test:
+  extends: .report
+  script:
+    - mvn jacoco:prepare-agent test jacoco:report
+  except:
+    variables:
+      - $COVERAGE_MODULE
+
+modules_test:
+  extends: .report
+  script:
+    - mvn jacoco:prepare-agent test jacoco:report-aggregate
+    - mkdir -p target/surefire-reports/
+    - find */target -name 'TEST-*.xml' -exec cp {} target/surefire-reports/ \;
+    - cp -R ${COVERAGE_MODULE}/target/site/jacoco-aggregate target/site/jacoco
+  only:
+    variables:
+      - $COVERAGE_MODULE
 
 pages:      
   stage: deploy
-  dependencies:
-    - test
   artifacts:
     paths:
       - public
