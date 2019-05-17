@@ -1,0 +1,29 @@
+@startuml
+
+skinparam rectangle {
+	roundCorner<<Repo>> 25
+}
+
+cloud Gitlab {
+    rectangle "forked/project" <<Repo>> as m {
+        card master as mm
+    }
+
+    rectangle "origin/project"  <<Repo>> as o {
+        card master as om
+    }
+}
+
+node Local {
+    rectangle "project" <<Repo>> as w {
+        card master as wm
+        card feature  as wf
+    }
+}
+
+om --> wm: 1. pull 
+wm -> wf: 2. branch / rebase
+wf -up-> mm: 3. push 
+om <- mm: 4. request merge
+
+@enduml

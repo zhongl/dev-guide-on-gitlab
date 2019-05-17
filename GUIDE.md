@@ -167,6 +167,23 @@ Issue 被分为四种基本状态:
 - **master** - 主流版本的功能演进分支
 - **1.x** - 第一个正式交付版本的维护分支
 
+### Origin & Forked & Local
+
+刚一开始多个远程库(Remote Repository)之间的交互, 难免会混乱出错. 这里提供如下操作流程:
+
+![origin & forked & local](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/zhongl/dev-guide-on-gitlab/master/.plantuml/ofl.txt)
+
+1. 使用 `git pull -r origin master` 从 **origin/master** 同步更新到本地;
+    1. `-r` 采用 `rebase` 的方式进行合并更新;
+    2. 一旦冲突, 建议使用 `git reset --hard origin/master`, **local/master 永远以 origin/master 为准**.
+2. 使用 `git checkout -b feature master` 从 **local/master** 检出分支进行新的开发; 
+    1. 这里的 `feature` 可自由命名;
+3. `feature` 一旦有提交, 则尽快使用 `git push forked feature:master`;
+    1. 一旦冲突, 建议使用 `git push -f forked feature:master` 强制覆盖, **forked/master 永远以 local/feature 为准**; 
+    2. `forked` 是通过 `git remote add forked http://domain/forked/project.git` 创建的, 其命名可以实际情况调整.
+4. 从 `forked/project:master` 向 `origin/project:master` 发起 **Merge Request** .
+    1. 若有冲突, 请执行 `步骤1` 将 **local/master** 同步至最新, 然后在 **local/feature** 上执行 `git rebase master` 根据提示解决所有冲突, 最后执行 `git push -f forked feature:master`
+
 
 
 [^1]: https://docs.gitlab.com/ce/workflow/forking_workflow.html#project-forking-workflow
