@@ -2,7 +2,7 @@
 
 ## Include CICD
 
-在尝试根据不同工程类型进行 **Pipeline** 标准化中, 发现 Gitlab 内置的 `.gitlab-ci.yml` 的模版达不到 **统一简化** 的目的. 转而借由 **Include** [^1]实现, 细节详见 [cicd/includes](./gitlab/cicd/includes/).
+在尝试根据不同工程类型进行 **Pipeline** 标准化中, 发现 Gitlab 内置的 `.gitlab-ci.yml` 的模版达不到 **统一简化** 的目的. 转而借由 **Include** [^1]实现, 细节详见 [cicd/includes](./cicd/includes/).
 
 ## Delivery Group
 
